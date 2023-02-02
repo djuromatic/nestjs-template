@@ -9,6 +9,10 @@ import { Reflector } from '@nestjs/core';
 
 /**
  * For this guard we need to enable RBAC and add permissions to access token
+ * Permission Guard needs to be placed after Authorization Guard in middleware chain
+ * example: @UseGuard(AuthorizationGuard, PermissionsGuard)
+ * Specific permissions for a controller endpoint can be set with @SetMetadata()
+ * example: @SetMetadata('permissions', ['read:test'])
  */
 @Injectable()
 export class PermissionsGuard implements CanActivate {
