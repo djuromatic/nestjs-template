@@ -18,6 +18,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/nestjs-template/tsconfig.app.json"
       }
+    },
+    "@libs/modules": {
+      "type": "library",
+      "root": "libs/modules",
+      "entryFile": "index",
+      "sourceRoot": "libs/modules",
+      "compilerOptions": {
+        "tsConfigPath": "libs/modules/tsconfig.json"
+      }
     }
   }
 }
