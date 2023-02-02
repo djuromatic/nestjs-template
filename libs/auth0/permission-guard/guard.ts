@@ -7,6 +7,9 @@ import {
 
 import { Reflector } from '@nestjs/core';
 
+/**
+ * For this guard we need to enable RBAC and add permissions to access token
+ */
 @Injectable()
 export class PermissionsGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
