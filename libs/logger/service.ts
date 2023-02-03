@@ -1,76 +1,76 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, LoggerService } from '@nestjs/common';
+import { ISecretsService } from 'libs/secrets/adapter';
 import * as winston from 'winston';
-import { ILoggerService } from './adapter';
-import { MessageType, ErrorType, LogLevels } from './type';
-import { DateFormats } from '../../utils';
 
-@Injectable()
-export class LoggerService implements ILoggerService {
-  private logger: winston.Logger;
+enum LogLevels {
+  INFO = 'info',
+  DEBUG = 'debug',
+  WARN = 'warn',
+  ERROR = 'error',
+  VERBOSE = 'verbose',
+}
 
-  constructor(log_level: string, node_env: string) {
-    this.logger = winston.createLogger({
-      levels: winston.config.npm.levels,
-      level: log_level,
-    });
-
-    this.logger.add(this.transport(this.getFormats(node_env)));
-  }
-
-  log(log): void {
-    this.logger.log(LogLevels.INFO, { message: log });
-  }
-
-  info({ message, context, obj }: MessageType): void {
-    this.logger.info(LogLevels.INFO, { message, context, obj });
-  }
-  warn({ message, context, obj }: MessageType): void {
-    this.logger.warn(LogLevels.WARN, { message, context, obj });
-  }
-  debug({ message, context, obj }: MessageType): void {
-    this.logger.debug(LogLevels.DEBUG, { message, context, obj });
-  }
-  error(error: ErrorType, message?: string, context?: string): void {
-    this.logger.error(LogLevels.ERROR, { message, context, error });
-  }
-
-  private transport(formats: winston.Logform.Format[]) {
-    return new winston.transports.Console({
-      format: winston.format.combine(...formats),
-    });
-  }
-
-  private getFormats(node_env: string) {
-    const formats = [];
-
-    const timestampFormat = winston.format.combine(
-      winston.format.timestamp({
-        format: DateFormats.DATE_WITH_TIME_LOGGER,
-      }),
-    );
-
-    const colorize = winston.format.colorize({
+const consoleTransport = new winston.transports.Console({
+  format: winston.format.combine(
+    winston.format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss',
+    }),
+    winston.format.colorize({
       colors: {
         info: 'cyan',
         debug: 'blue',
         error: 'red',
         warn: 'yellow',
       },
+    }),
+    winston.format.printf((info) => {
+      return `${info.timestamp} [${info.level}] [${info.context}] ${info.message}`;
+    }),
+  ),
+});
+
+const cloudTransport = new winston.transports.Console({
+  format: winston.format.combine(
+    winston.format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss',
+    }),
+    winston.format.printf((info) => {
+      return `${info.timestamp} [${info.level}] [${info.context}] ${info.message}`;
+    }),
+  ),
+});
+
+@Injectable()
+export class Logger implements LoggerService {
+  private logger: winston.Logger;
+
+  constructor(secrets: ISecretsService) {
+    const env = secrets.global.node_env;
+    const level = env === 'local' ? LogLevels.DEBUG : LogLevels.INFO;
+
+    this.logger = winston.createLogger({
+      levels: winston.config.npm.levels,
+      level,
     });
 
-    const printf = winston.format.printf((info) => {
-      let message = `${info.timestamp} [${info.level}] `;
-      if (info.context) message += `${info.context} `;
-      message += `${info.message} `;
-      if (info.obj) message += `${JSON.stringify(info.obj)}`;
-      if (info.error) message += `${JSON.stringify(info.error)}`;
+    if (env !== 'local') {
+      this.logger.add(cloudTransport);
+    } else this.logger.add(consoleTransport);
+  }
 
-      return message;
-    });
-
-    if (node_env === 'local') formats.push(colorize);
-    formats.push(timestampFormat, printf);
-
-    return formats;
+  log(message: any, context: string): void {
+    this.logger.log(LogLevels.INFO, { message, context });
+  }
+  error(message: any, context: string): void {
+    this.logger.error({ message, context });
+  }
+  warn(message: any, context: string) {
+    this.logger.warn({ message, context });
+  }
+  debug(message: any, context: string) {
+    this.logger.debug({ message, context });
+  }
+  verbose(message: any, context: string) {
+    this.logger.verbose({ message, context });
   }
 }

@@ -1,24 +1,30 @@
 import { RequestMethod } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ILoggerService } from 'libs/logger/adapter';
+import { Logger } from 'libs/logger/service';
+
 import { ISecretsService } from 'libs/secrets/adapter';
-import { AppExceptionFilter } from 'utils/filters/http-exception.filter';
+import { AppExceptionFilter } from 'utils/filters/exception-filter';
+import { HttpLoggerInterceptor } from 'utils/interceptors/http-logger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
 
-  const loggerService = app.get(ILoggerService);
+  const secrets = app.get(ISecretsService);
+
+  const logger = new Logger(secrets);
 
   // something maybe to implement so we can set application name in logs
   // loggerService.setApplication("template");
+  app.useLogger(logger);
 
-  app.useGlobalFilters(new AppExceptionFilter(loggerService));
+  app.useGlobalInterceptors(new HttpLoggerInterceptor(logger));
+  app.useGlobalFilters(new AppExceptionFilter(logger));
 
   // add interceptors here
   // app.useGlobalInterceptors(new HttpLoggerInterceptor(loggerService));
-
-  app.useLogger(loggerService);
 
   app.setGlobalPrefix('api', {
     exclude: [{ path: 'health', method: RequestMethod.GET }],
@@ -27,9 +33,6 @@ async function bootstrap() {
   const { global } = app.get(ISecretsService);
 
   await app.listen(global.port);
-  loggerService.info({
-    message: `Listening at port ${global.port}`,
-    context: 'InstanceLoader',
-  });
+  logger.log(`Listening at port ${global.port}`, 'NestApplication');
 }
 bootstrap();

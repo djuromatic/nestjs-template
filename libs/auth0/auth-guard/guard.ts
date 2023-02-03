@@ -1,9 +1,5 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { UnauthorizedException } from '../../../utils/exceptions/unauthorized-exception';
 import { promisify } from 'util';
 import { expressjwt as jwt } from 'express-jwt';
 import { expressJwtSecret } from 'jwks-rsa';
@@ -35,6 +31,7 @@ export class AuthorizationGuard implements CanActivate {
       await checkJwt(req, res);
       return true;
     } catch (error) {
+      // throwing error
       throw new UnauthorizedException(error);
     }
   }
