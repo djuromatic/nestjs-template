@@ -16,14 +16,19 @@ export default class TypeOrmConfig implements TypeOrmOptionsFactory {
 
   readonly synchronize: boolean;
 
+  readonly logging: boolean;
+
   constructor(private secrets: ISecretsService) {
-    const { dbname, host, port, username, password } = this.secrets.database;
+    console.log(secrets);
+    const { dbname, host, port, username, password, logging } =
+      this.secrets.database;
     this.name = dbname;
     this.host = host;
     this.port = port;
     this.username = username;
     this.password = password;
     this.synchronize = true;
+    this.logging = logging;
   }
 
   createTypeOrmOptions = (): TypeOrmModuleOptions => {
@@ -35,7 +40,7 @@ export default class TypeOrmConfig implements TypeOrmOptionsFactory {
       password: this.password,
       database: this.name,
       synchronize: this.synchronize,
-      logging: false,
+      logging: this.logging,
       autoLoadEntities: true,
     };
   };

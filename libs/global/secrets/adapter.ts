@@ -16,5 +16,6 @@ export abstract class ISecretsService {
     username: string;
     password: string;
     dbname: string;
+    logging: boolean;
   };
 }

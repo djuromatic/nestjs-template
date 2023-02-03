@@ -14,6 +14,7 @@ export class SecretsService extends ConfigService implements ISecretsService {
     username: this.get('DB_USERNAME'),
     password: this.get('DB_PASSWORD'),
     dbname: this.get('DB_NAME'),
+    logging: this.get('DB_LOGGING') === 'true' || false,
   };
   global = {
     node_env: this.get('NODE_ENV') ?? 'prod',
