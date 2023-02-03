@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { formatDateWithTime } from 'utils/date';
 import * as errorStatus from './status';
+// import { v4 as uuidv4 } from 'uuid';
 import { ErrorModel } from './type';
 
 @Catch(HttpException)
@@ -33,7 +34,7 @@ export class AppExceptionFilter implements ExceptionFilter {
     //! redundent code
     if (!req.headers?.traceid) {
       this.logger.warn('missing traceid in header', 'Tracing');
-      req.headers.traceid = uuidv4();
+      //   req.headers.traceid = uuidv4();
       this.logger.warn('Id added on backend', 'Tracing');
     }
 

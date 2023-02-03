@@ -13,8 +13,8 @@ export abstract class ISecretsService {
   database: {
     host: string;
     port: number;
-    user: string;
-    pass: string;
+    username: string;
+    password: string;
     dbname: string;
   };
 }

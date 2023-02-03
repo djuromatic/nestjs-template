@@ -1,22 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthorizationModule } from 'libs/auth0/auth-guard/module';
-import { SecretsModule } from 'libs/secrets/module';
-import { SecretsService } from 'libs/secrets/service';
 import { PermissionsModule } from 'libs/auth0/permission-guard/module';
-import { LoggerModule } from 'libs/logger/module';
+import { UserModule } from './user/user.module';
+import { DatabaseModule } from 'libs/database/database.module';
+import { GlobalModule } from 'libs/global/module';
 
 @Module({
   imports: [
     AuthorizationModule,
     PermissionsModule,
-    SecretsModule,
-    LoggerModule,
+    GlobalModule,
     ConfigModule.forRoot(),
+    DatabaseModule,
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, SecretsService],
 })
 export class AppModule {}

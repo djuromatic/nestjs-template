@@ -7,11 +7,12 @@ export class SecretsService extends ConfigService implements ISecretsService {
   constructor() {
     super();
   }
+
   database = {
     host: this.get('DB_HOST'),
     port: this.get('DB_PORT'),
-    user: this.get('DB_USER'),
-    pass: this.get('DB_PASS'),
+    username: this.get('DB_USERNAME'),
+    password: this.get('DB_PASSWORD'),
     dbname: this.get('DB_NAME'),
   };
   global = {

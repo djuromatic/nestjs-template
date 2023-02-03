@@ -1,8 +1,9 @@
 import { RequestMethod } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { Logger } from 'libs/logger/service';
+import { AuthorizationGuard } from 'libs/auth0/auth-guard/guard';
+import { Logger } from 'libs/global/logger/service';
+import { ISecretsService } from 'libs/global/secrets/adapter';
 
-import { ISecretsService } from 'libs/secrets/adapter';
 import { AppExceptionFilter } from 'utils/filters/exception-filter';
 import { HttpLoggerInterceptor } from 'utils/interceptors/http-logger';
 import { AppModule } from './app.module';
@@ -22,6 +23,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new HttpLoggerInterceptor(logger));
   app.useGlobalFilters(new AppExceptionFilter(logger));
+  app.useGlobalGuards(new AuthorizationGuard(secrets));
 
   // add interceptors here
   // app.useGlobalInterceptors(new HttpLoggerInterceptor(loggerService));
