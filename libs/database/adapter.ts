@@ -1,11 +1,10 @@
 import { Repository } from 'typeorm';
-import { Expose, plainToClass } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { IsNumber, IsString } from 'class-validator';
 
 export type Paginated<T> = {
   data: T[];
