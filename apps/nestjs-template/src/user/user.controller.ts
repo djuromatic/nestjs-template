@@ -33,7 +33,7 @@ export class UserController {
     return this.userService.findPaginated(query);
   }
 
-  @Get('/{userId}')
+  @Get(':userId')
   @UseGuards(PermissionsGuard)
   @SetMetadata('permissions', ['read:test'])
   getUser(@Param('userId') userId: string): Promise<User> {
