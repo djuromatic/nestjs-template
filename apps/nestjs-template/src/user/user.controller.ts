@@ -7,6 +7,8 @@ import {
   Query,
   SetMetadata,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 
 import { PermissionsGuard } from 'libs/auth0/permission-guard/guard';

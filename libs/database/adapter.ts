@@ -5,16 +5,26 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { IsIn, IsNotEmpty, IsNumberString, IsOptional } from 'class-validator';
 
 export type Paginated<T> = {
   data: T[];
   count: number;
 };
 
-export interface PaginatedQuery {
+export class PaginatedQuery {
+  @IsNumberString()
   skip: number;
+  @IsNumberString()
   take: number;
+
+  @IsOptional()
+  @IsNotEmpty()
   sort: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsIn(['ASC', 'DESC'])
   order: 'ASC' | 'DESC';
   [key: string]: any;
 }

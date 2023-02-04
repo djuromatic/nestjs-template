@@ -25,7 +25,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AppExceptionFilter(logger));
   app.useGlobalGuards(new AuthorizationGuard(secrets));
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   // add interceptors here
   // app.useGlobalInterceptors(new HttpLoggerInterceptor(loggerService));
