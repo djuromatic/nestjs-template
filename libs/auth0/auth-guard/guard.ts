@@ -3,11 +3,11 @@ import { UnauthorizedException } from '../../../utils/exceptions/unauthorized-ex
 import { promisify } from 'util';
 import { expressjwt as jwt } from 'express-jwt';
 import { expressJwtSecret } from 'jwks-rsa';
-import { SecretsService } from 'libs/secrets/service';
+import { ISecretsService } from 'libs/global/secrets/adapter';
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
-  constructor(private secrets: SecretsService) {}
+  constructor(private secrets: ISecretsService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const [req, res] = [context.getArgByIndex(0), context.getArgByIndex(1)];

@@ -1,15 +1,18 @@
 import { Module } from '@nestjs/common';
-import { ISecretsService } from 'libs/secrets/adapter';
-import { SecretsModule } from 'libs/secrets/module';
-import { SecretsService } from 'libs/secrets/service';
+import { ISecretsService } from 'libs/global/secrets/adapter';
+import { SecretsModule } from 'libs/global/secrets/module';
+import { AuthorizationGuard } from './guard';
 
 @Module({
   imports: [SecretsModule],
   providers: [
     {
-      provide: ISecretsService,
-      useClass: SecretsService,
+      provide: AuthorizationGuard,
+      useFactory: (secretsService: ISecretsService) =>
+        new AuthorizationGuard(secretsService),
+      inject: [ISecretsService],
     },
   ],
+  exports: [AuthorizationGuard],
 })
 export class AuthorizationModule {}

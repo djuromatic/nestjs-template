@@ -10,4 +10,12 @@ export abstract class ISecretsService {
   logger: {
     log_level: string;
   };
+  database: {
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    dbname: string;
+    logging: boolean;
+  };
 }

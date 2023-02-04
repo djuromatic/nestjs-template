@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { formatDateWithTime } from 'utils/date';
 import * as errorStatus from './status';
+import { v4 as uuidv4 } from 'uuid';
 import { ErrorModel } from './type';
 
 @Catch(HttpException)
@@ -47,7 +48,4 @@ export class AppExceptionFilter implements ExceptionFilter {
       },
     }) as ErrorModel;
   }
-}
-function uuidv4(): any {
-  throw new Error('Function not implemented.');
 }

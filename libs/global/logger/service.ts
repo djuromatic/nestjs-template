@@ -1,6 +1,6 @@
 import { Injectable, LoggerService } from '@nestjs/common';
-import { ISecretsService } from 'libs/secrets/adapter';
 import * as winston from 'winston';
+import { ISecretsService } from '../secrets/adapter';
 
 enum LogLevels {
   INFO = 'info',
