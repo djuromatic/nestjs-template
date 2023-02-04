@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
-import { BaseDto } from './base.dto';
+import { BaseDto } from 'libs/database/adapter';
 
 export class UserDto extends BaseDto {
   @IsNotEmpty()

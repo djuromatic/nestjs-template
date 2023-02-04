@@ -74,3 +74,10 @@ export abstract class CustomBaseEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt?: Date;
 }
+
+export abstract class BaseDto {
+  @Expose()
+  createdAt: Date;
+  @Expose()
+  updatedAt: Date;
+}
