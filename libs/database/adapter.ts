@@ -54,7 +54,6 @@ export abstract class BaseRepository<
       .take(take)
       .skip(skip)
       .getManyAndCount();
-
     return {
       data: results,
       count: total,
