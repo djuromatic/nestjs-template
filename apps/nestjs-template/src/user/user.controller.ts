@@ -1,41 +1,42 @@
 import {
+  Body,
   Controller,
   Get,
-  Logger,
+  Param,
   Post,
+  Query,
   SetMetadata,
   UseGuards,
 } from '@nestjs/common';
 
 import { PermissionsGuard } from 'libs/auth0/permission-guard/guard';
-import { User } from './user.entity';
+import { Paginated, PaginatedQuery } from 'libs/database/adapter';
+import { UserDto } from '../dto/user.dto';
+import { User } from '../entitis/user.entity';
 import { UserService } from './user.service';
 
 @Controller('/user')
 export class UserController {
-  private logger = new Logger(UserController.name);
   constructor(private readonly userService: UserService) {}
 
-  @Get()
-  getHello(): Promise<User[]> {
-    return this.userService.findAll();
-  }
-
-  @Post('create')
-  createUser() {
-    this.logger.log('Creating user');
-    return this.userService.create({
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      isActive: true,
-    });
-  }
-
+  @Post()
   @UseGuards(PermissionsGuard)
   @SetMetadata('permissions', ['read:test'])
-  @Get('protected')
-  getHelloProtected(): Promise<User[]> {
-    return this.userService.findAll();
+  createUser(@Body() body: UserDto) {
+    return this.userService.create(body);
+  }
+
+  @Get()
+  @UseGuards(PermissionsGuard)
+  @SetMetadata('permissions', ['read:test'])
+  getUsers(@Query() query: PaginatedQuery): Promise<Paginated<User>> {
+    return this.userService.findPaginated(query);
+  }
+
+  @Get('/{userId}')
+  @UseGuards(PermissionsGuard)
+  @SetMetadata('permissions', ['read:test'])
+  getUser(@Param('userId') userId: string): Promise<User> {
+    return this.userService.findOne(userId);
   }
 }

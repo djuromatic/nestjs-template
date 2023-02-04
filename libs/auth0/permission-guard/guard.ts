@@ -23,7 +23,6 @@ export class PermissionsGuard implements CanActivate {
 
     const userPermissions =
       this.parseJwt(req?.headers?.authorization).permissions || [];
-    console.log(userPermissions);
     const requiredPermissions =
       this.reflector.get('permissions', context.getHandler()) || [];
 

@@ -19,7 +19,6 @@ export default class TypeOrmConfig implements TypeOrmOptionsFactory {
   readonly logging: boolean;
 
   constructor(private secrets: ISecretsService) {
-    console.log(secrets);
     const { dbname, host, port, username, password, logging } =
       this.secrets.database;
     this.name = dbname;

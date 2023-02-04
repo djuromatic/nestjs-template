@@ -4,16 +4,7 @@ import { ISecretsService } from 'libs/global/secrets/adapter';
 import TypeOrmConfig from './service';
 
 @Module({
-  providers: [
-    // {
-    //   provide: ISecretsService,
-    //   useClass: SecretsService,
-    // },
-    // // {
-    //   provide: IRepository,
-    //   useClass: Repository,
-    // },
-  ],
+  providers: [],
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: (secrets: ISecretsService) =>
