@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-$ yarn install
+$ yarn app:install
 ```
 
 ## Running the app
