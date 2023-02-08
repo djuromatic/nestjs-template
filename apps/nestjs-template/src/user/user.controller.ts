@@ -11,6 +11,7 @@ import {
 
 import { PermissionsGuard } from 'libs/auth0/permission-guard/guard';
 import { Paginated, PaginatedQuery } from 'libs/database/adapter';
+import { UuidValidator } from 'utils';
 import { UserDto } from '../dto/user.dto';
 import { User } from '../entitis/user.entity';
 import { UserService } from './user.service';
@@ -36,7 +37,7 @@ export class UserController {
   @Get(':userId')
   @UseGuards(PermissionsGuard)
   @SetMetadata('permissions', ['read:test'])
-  getUser(@Param('userId') userId: string): Promise<User> {
+  getUser(@Param('userId', new UuidValidator()) userId: string): Promise<User> {
     return this.userService.findOne(userId);
   }
 }
