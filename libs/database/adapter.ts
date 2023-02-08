@@ -48,9 +48,11 @@ export abstract class BaseRepository<
     const [results, total] = await this.createQueryBuilder()
       .where(search)
       .orderBy(
+        //if sort is camelCase, convert it to snake_case
+        //orderBy is not supporting camelCase
         sort.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`),
         order,
-      ) // apperently type "ASC" | "DESC" is not a string
+      )
       .take(take)
       .skip(skip)
       .getManyAndCount();

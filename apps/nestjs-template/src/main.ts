@@ -3,9 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AuthorizationGuard } from 'libs/auth0/auth-guard/guard';
 import { Logger } from 'libs/global/logger/service';
 import { ISecretsService } from 'libs/global/secrets/adapter';
-
-import { AppExceptionFilter } from 'utils/filters/exception-filter';
-import { HttpLoggerInterceptor } from 'utils/interceptors/http-logger';
+import { AppExceptionFilter, HttpLoggerInterceptor } from 'utils';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
