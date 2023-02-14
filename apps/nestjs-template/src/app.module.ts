@@ -5,6 +5,7 @@ import { PermissionsModule } from 'libs/auth0/permission-guard/module';
 import { UserModule } from './user/user.module';
 import { DatabaseModule } from 'libs/database/database.module';
 import { GlobalModule } from 'libs/global/module';
+import { OrganizationModule } from './organization/organization.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GlobalModule } from 'libs/global/module';
     ConfigModule.forRoot(),
     DatabaseModule,
     UserModule,
+    OrganizationModule,
   ],
 })
 export class AppModule {}

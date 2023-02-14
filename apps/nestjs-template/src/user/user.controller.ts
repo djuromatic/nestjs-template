@@ -12,32 +12,39 @@ import {
 import { PermissionsGuard } from 'libs/auth0/permission-guard/guard';
 import { Paginated, PaginatedQuery } from 'libs/database/adapter';
 import { UuidValidator } from 'utils';
-import { UserDto } from '../dto/user.dto';
-import { User } from '../entitis/user.entity';
+import { UserDto } from './dto/user.dto';
+import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
-@Controller('/user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  @UseGuards(PermissionsGuard)
+  @Get('all')
+  // @UseGuards(PermissionsGuard)
   @SetMetadata('permissions', ['read:test'])
-  createUser(@Body() body: UserDto) {
-    return this.userService.create(body);
+  getAllUsers(): Promise<User[]> {
+    return this.userService.findUsers();
   }
 
   @Get()
-  @UseGuards(PermissionsGuard)
+  // @UseGuards(PermissionsGuard)
   @SetMetadata('permissions', ['read:test'])
   getUsers(@Query() query: PaginatedQuery): Promise<Paginated<User>> {
     return this.userService.findPaginated(query);
   }
 
-  @Get(':userId')
-  @UseGuards(PermissionsGuard)
+  @Get(':id')
+  // @UseGuards(PermissionsGuard)
   @SetMetadata('permissions', ['read:test'])
-  getUser(@Param('userId', new UuidValidator()) userId: string): Promise<User> {
-    return this.userService.findOne(userId);
+  getUser(@Param('id', new UuidValidator()) id: string): Promise<User> {
+    return this.userService.findOne(id);
+  }
+
+  @Post()
+  // @UseGuards(PermissionsGuard)
+  @SetMetadata('permissions', ['read:test'])
+  createUser(@Body() body: UserDto) {
+    return this.userService.create(body);
   }
 }

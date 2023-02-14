@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Paginated, PaginatedQuery } from 'libs/database/adapter';
-import { UserDto } from '../dto/user.dto';
-import { User } from '../entitis/user.entity';
+import { UserDto } from './dto/user.dto';
+import { User } from './entity/user.entity';
 import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private usersRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) {}
+
+  async findUsers(): Promise<User[]> {
+    return this.userRepository.find();
+  }
 
   async findPaginated(query: PaginatedQuery): Promise<Paginated<User>> {
-    const result = await this.usersRepository.paginated(query);
+    const result = await this.userRepository.paginated(query);
     return {
       ...result,
       data: result.data.map((user) => plainToInstance(UserDto, user)),
@@ -18,13 +22,12 @@ export class UserService {
   }
 
   async findOne(id: string): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
+    return this.userRepository.findOneBy({ id });
   }
 
-  async create(user: UserDto): Promise<User> {
-    const result = await this.usersRepository.save(
-      this.usersRepository.create(user),
-    );
+  async create(userDto: UserDto): Promise<User> {
+    const user = this.userRepository.create(userDto);
+    const result = await this.userRepository.save(user);
 
     return plainToInstance(UserDto, result, { excludeExtraneousValues: true });
   }

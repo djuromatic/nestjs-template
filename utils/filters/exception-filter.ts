@@ -9,7 +9,7 @@ import {
 import { formatDateWithTime } from 'utils/date';
 import * as errorStatus from './status';
 import { v4 as uuidv4 } from 'uuid';
-import { ErrorModel } from './type';
+import { ErrorModel } from './types';
 
 @Catch(HttpException)
 export class AppExceptionFilter implements ExceptionFilter {
