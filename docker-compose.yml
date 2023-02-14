@@ -20,8 +20,8 @@ services:
       - LOG_LEVEL=info
       - NODE_ENV=local
       - PORT=4000
-      - AUTH_AUDIENCE=https://api.djuromatic.com
-      - AUTH_ISSUER=https://dev-iy5m7mm66oguorl0.us.auth0.com/
+      - AUTH_AUDIENCE=
+      - AUTH_ISSUER=
   db:
     container_name: postgres
     image: postgres:14.1-alpine
