@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../../user/entity/user.entity';
+
 import { Organization } from './organization.entity';
 
 @Entity('organizations_users')

@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { CustomBaseEntity } from 'libs/database/adapter';
+import { CustomBaseEntity } from 'libs/modules/database/adapter';
 import {
   Entity,
   Column,
@@ -9,8 +9,8 @@ import {
   BeforeInsert,
   VirtualColumn,
 } from 'typeorm';
-import { OrganizationUser } from '../../organization/entity/organization-user.entity';
-import { Organization } from '../../organization/entity/organization.entity';
+import { OrganizationUser } from '../../../../bizzlet/src/organization/entity/organization-user.entity';
+import { Organization } from '../../../../bizzlet/src/organization/entity/organization.entity';
 import { UserNotification } from './user-notification.entity';
 import { UserProfile } from './user-profile.entity';
 import { UserSettings } from './user-settings.entity';

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseRepository } from 'libs/database/adapter';
+import { BaseRepository } from 'libs/modules/database/adapter';
 import { Repository } from 'typeorm';
 import { Organization } from './entity/organization.entity';
 

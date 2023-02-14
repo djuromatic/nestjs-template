@@ -1,8 +1,6 @@
 import { Expose } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { BaseDto } from 'libs/database/adapter';
-import { UserProfileDto } from './user-profile.dto';
-import { UserSettingsDto } from './user-settings.dto';
+import { BaseDto } from 'libs/modules/database/adapter';
 
 export class UserDto extends BaseDto {
   @IsNumber()

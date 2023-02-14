@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { Paginated, PaginatedQuery } from 'libs/database/adapter';
+import { Paginated, PaginatedQuery } from 'libs/modules/database/adapter';
 import { OrganizationDto } from './dto/organization.dto';
 import { Organization } from './entity/organization.entity';
 import { OrganizationRepository } from './organization.repository';
