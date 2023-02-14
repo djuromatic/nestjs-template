@@ -5,11 +5,14 @@ import { Logger } from 'libs/modules/global/logger/service';
 import { ISecretsService } from 'libs/modules/global/secrets/adapter';
 import { AppExceptionFilter, HttpLoggerInterceptor } from 'libs/utils';
 import { AppModule } from './app.module';
+import { setupSwagger } from './config/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
+
+  setupSwagger(app);
 
   const secrets = app.get(ISecretsService);
 
