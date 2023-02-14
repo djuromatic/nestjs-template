@@ -1,5 +1,27 @@
 version: '3.8'
 services:
+  bizzlet:
+    container_name: bizzlet
+    build:
+      context: .
+      dockerfile: ./apps/bizzlet/Dockerfile
+    restart: always
+    ports:
+      - '4000:4000'
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=postgres
+      - DB_LOGGING=false
+      - LOG_LEVEL=info
+      - NODE_ENV=local
+      - PORT=4000
+      - AUTH_AUDIENCE=
+      - AUTH_ISSUER=
   db:
     container_name: postgres
     image: postgres:14.1-alpine
@@ -18,7 +40,7 @@ services:
     ports:
       - '5050:80'
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
       - pgadmin-data:/var/lib/pgadmin

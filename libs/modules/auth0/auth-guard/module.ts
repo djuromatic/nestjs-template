@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ISecretsService } from 'libs/global/secrets/adapter';
-import { SecretsModule } from 'libs/global/secrets/module';
 import { AuthorizationGuard } from './guard';
+import { SecretsModule } from 'libs/modules/global/secrets/module';
+import { ISecretsService } from 'libs/modules/global/secrets/adapter';
 
 @Module({
   imports: [SecretsModule],

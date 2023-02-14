@@ -1,15 +1,18 @@
 import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AuthorizationGuard } from 'libs/auth0/auth-guard/guard';
-import { Logger } from 'libs/global/logger/service';
-import { ISecretsService } from 'libs/global/secrets/adapter';
-import { AppExceptionFilter, HttpLoggerInterceptor } from 'utils';
+import { AuthorizationGuard } from 'libs/modules/auth0/auth-guard/guard';
+import { Logger } from 'libs/modules/global/logger/service';
+import { ISecretsService } from 'libs/modules/global/secrets/adapter';
+import { AppExceptionFilter, HttpLoggerInterceptor } from 'libs/utils';
 import { AppModule } from './app.module';
+import { setupSwagger } from './config/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
+
+  setupSwagger(app);
 
   const secrets = app.get(ISecretsService);
 

@@ -6,7 +6,7 @@ import {
   HttpStatus,
   LoggerService,
 } from '@nestjs/common';
-import { formatDateWithTime } from 'utils/date';
+import { formatDateWithTime } from '../date';
 import * as errorStatus from './status';
 import { v4 as uuidv4 } from 'uuid';
 import { ErrorModel } from './types';

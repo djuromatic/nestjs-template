@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsIn, IsNotEmpty, IsNumberString, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type Paginated<T> = {
   data: T[];
@@ -13,22 +14,26 @@ export type Paginated<T> = {
 };
 
 export class PaginatedQuery {
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsNumberString()
   skip: number;
-
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsNumberString()
   take: number;
 
+  @ApiProperty({ default: 'createdAt', required: false })
   @IsOptional()
   @IsNotEmpty()
   sort: string;
 
+  @ApiProperty({ default: 'DESC', required: false })
   @IsOptional()
   @IsNotEmpty()
   @IsIn(['ASC', 'DESC'])
   order: 'ASC' | 'DESC';
+
   [key: string]: any;
 }
 

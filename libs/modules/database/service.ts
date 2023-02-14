@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
-import { ISecretsService } from 'libs/global/secrets/adapter';
+import { ISecretsService } from 'libs/modules/global/secrets/adapter';
 
 @Injectable()
 export default class TypeOrmConfig implements TypeOrmOptionsFactory {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ISecretsService } from 'libs/global/secrets/adapter';
+import { ISecretsService } from 'libs/modules/global/secrets/adapter';
 import TypeOrmConfig from './service';
 
 @Module({
