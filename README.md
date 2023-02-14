@@ -4,10 +4,6 @@
 
 ## Installation
 
-```bash
-$ yarn app:install
-```
-
 ## Running the app
 
 ```bash
