@@ -1,8 +1,16 @@
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
+
+```bash
+# install dependencies
+$ yarn app:install
+
+# generate certificate
+# you need to have mkcert installed
+$ yarn bizzllet:certificate
+
+```
 
 ## Running the app
 
