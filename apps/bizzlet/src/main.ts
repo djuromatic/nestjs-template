@@ -11,10 +11,8 @@ import { setupSwagger } from './config/swagger';
 async function bootstrap() {
   const path = require('path');
   const fs = require('fs');
-
-  console.log(path.join(__dirname, 'cert', 'key.pem'));
   const keyFile = fs.readFileSync(path.join(__dirname, 'certs', 'key.pem'));
-  const certFile = fs.readFileSync(path.join(__dirname, 'certs', 'key.pem'));
+  const certFile = fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'));
 
   const app = await NestFactory.create(AppModule, {
     httpsOptions: {
