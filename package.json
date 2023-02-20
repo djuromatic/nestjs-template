@@ -8,13 +8,19 @@
   "engines": {
     "node": ">= 18.0.0 <= 18.13.0"
   },
+  "workspaces": {
+    "packages": [
+      "./apps/*",
+      "./libs/*"
+    ]
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "modules:install": "cd ./libs/modules && yarn ",
     "utils:install": "cd ./libs/utils && yarn ",
-    "app:install": "yarn utils:install && yarn modules:install && yarn",
+    "app:install": "yarn && yarn workspace ./libs/modules install && yarn workspace ./libs/utils install && install && yarn workspace ./apps/bizzlet install",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
