@@ -7,7 +7,7 @@ fi
 mkcert -install
 
 #set domain to bizzlet.dev
-domain="bizzlet.dev"
+domain="bizzllet.test"
 
 #generate cert
 mkcert ${domain}
