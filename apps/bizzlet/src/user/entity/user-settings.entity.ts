@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-
+import { CustomBaseEntity } from 'libs/modules/database/adapter';
 import {
   Entity,
   Column,
@@ -10,15 +10,18 @@ import {
 import { User } from './user.entity';
 
 @Entity('user_settings')
-export class UserSettings {
+export class UserSettings extends CustomBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id?: string;
 
   @Expose()
-  @Column({ name: 'default_currency' })
-  defaultCurrency: string;
+  @Column({ name: 'default_currency', default: null })
+  defaultCurrency?: string;
+
+  @Column({ name: 'user_id', type: 'uuid' })
+  userId?: string;
 
   @OneToOne(() => User, (user) => user.settings)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user?: User;
 }

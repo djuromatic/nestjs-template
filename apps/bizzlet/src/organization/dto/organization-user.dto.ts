@@ -6,6 +6,5 @@ export class OrganizationUserDto extends BaseDto {
   @IsNotEmpty()
   @IsString()
   @Expose()
-  @IsIn(['ADMIN', 'MEMBER'])
   role: string;
 }

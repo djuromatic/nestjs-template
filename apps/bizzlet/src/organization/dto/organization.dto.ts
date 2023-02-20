@@ -1,10 +1,17 @@
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 import { BaseDto } from 'libs/modules/database/adapter';
+import { OrganizationProfileDto } from './organization-profile.dto';
+import { OrganizationSettingsDto } from './organization-settings.dto';
 
 export class OrganizationDto extends BaseDto {
-  @IsNotEmpty()
   @IsString()
   @Expose()
-  name: string;
+  name?: string;
+
+  @Expose()
+  profile?: OrganizationProfileDto;
+
+  @Expose()
+  settings?: OrganizationSettingsDto;
 }

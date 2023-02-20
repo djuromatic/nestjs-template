@@ -1,18 +1,16 @@
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class UserProfileDto {
-  @IsNotEmpty()
   @IsString()
   @Expose()
-  firstName: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Expose()
-  lastName: string;
+  firstName?: string;
 
   @IsString()
   @Expose()
-  location: string;
+  lastName?: string;
+
+  @IsString()
+  @Expose()
+  location?: string;
 }

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationService } from './organization.service';
 import { OrganizationController } from './organization.controller';
-import { Organization } from './entity/organization.entity';
 import { OrganizationRepository } from './organization.repository';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Organization } from './entity/organization.entity';
 import { OrganizationSettings } from './entity/organization-settings.entity';
 import { OrganizationContact } from './entity/organization-contact.entity';
 import { OrganizationProfile } from './entity/organization-profile.entity';

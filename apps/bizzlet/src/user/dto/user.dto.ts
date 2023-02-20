@@ -1,11 +1,13 @@
 import { Expose } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { BaseDto } from 'libs/modules/database/adapter';
+import { UserProfileDto } from './user-profile.dto';
+import { UserSettingsDto } from './user-settings.dto';
 
 export class UserDto extends BaseDto {
-  @IsNumber()
+  @IsString()
   @Expose()
-  publicId: number;
+  publicId: string;
 
   @IsNotEmpty()
   @IsString()
@@ -16,4 +18,10 @@ export class UserDto extends BaseDto {
   @IsNumber()
   @Expose()
   status: number;
+
+  @Expose()
+  profile?: UserProfileDto;
+
+  @Expose()
+  settings?: UserSettingsDto;
 }

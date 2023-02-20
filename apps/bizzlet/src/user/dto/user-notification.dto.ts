@@ -1,7 +1,11 @@
 import { Expose } from 'class-transformer';
-import { IsJSON, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UserNotificationDto {
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+
   @IsNotEmpty()
   @IsNumber()
   @Expose()
@@ -13,7 +17,6 @@ export class UserNotificationDto {
   message: string;
 
   @IsNotEmpty()
-  @IsJSON()
   @Expose()
-  metadata: string;
+  metadata?: Object;
 }

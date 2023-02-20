@@ -1,15 +1,6 @@
 import { Expose } from 'class-transformer';
-import {
-  Entity,
-  Column,
-  PrimaryColumn,
-  ManyToMany,
-  JoinTable,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from '../../user/entity/user.entity';
-
 import { Organization } from './organization.entity';
 
 @Entity('organizations_users')
@@ -23,14 +14,14 @@ export class OrganizationUser {
   organizationId: string;
 
   @ManyToOne(() => User, (user) => user.organizationsUsers)
-  @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
+  @JoinColumn([{ name: 'user_id' }])
   user: User;
 
   @ManyToOne(
     () => Organization,
     (organization) => organization.organizationsUsers,
   )
-  @JoinColumn([{ name: 'organization_id', referencedColumnName: 'id' }])
+  @JoinColumn([{ name: 'organization_id' }])
   organization: Organization;
 
   @Expose()

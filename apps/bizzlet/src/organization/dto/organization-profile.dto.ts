@@ -1,11 +1,8 @@
 import { Expose } from 'class-transformer';
-import { IsJSON, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class OrganizationProfileDto {
- 
-
-
   @IsString()
   @Expose()
-  location: string;
+  location?: string;
 }
