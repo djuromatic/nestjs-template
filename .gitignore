@@ -2,8 +2,8 @@
 /dist
 /node_modules
 
+#Certs
 /certs
-
 # Logs
 logs
 *.log
