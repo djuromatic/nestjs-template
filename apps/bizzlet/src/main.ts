@@ -4,11 +4,21 @@ import { AuthorizationGuard } from 'libs/modules/auth0/auth-guard/guard';
 import { Logger } from 'libs/modules/global/logger/service';
 import { ISecretsService } from 'libs/modules/global/secrets/adapter';
 import { AppExceptionFilter, HttpLoggerInterceptor } from 'libs/utils';
+
 import { AppModule } from './app.module';
 import { setupSwagger } from './config/swagger';
 
 async function bootstrap() {
+  const path = require('path');
+  const fs = require('fs');
+  const keyFile = fs.readFileSync(path.join(__dirname, 'certs', 'key.pem'));
+  const certFile = fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'));
+
   const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key: keyFile,
+      cert: certFile,
+    },
     bufferLogs: true,
   });
 
