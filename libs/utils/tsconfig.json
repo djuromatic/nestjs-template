@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declaration": false,
     "experimentalDecorators": true,
-    "outDir": "../../../dist/libs/utils"
+    "outDir": "../../dist/libs/utils"
   },
   "sourceMap": true,
   "include": ["./**/*.ts"],

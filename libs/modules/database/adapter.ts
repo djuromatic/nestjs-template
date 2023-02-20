@@ -14,9 +14,12 @@ export type Paginated<T> = {
 };
 
 export class PaginatedQuery {
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsNumberString()
   skip: number;
   @ApiProperty({ required: false })
+  @IsOptional()
   @IsNumberString()
   take: number;
 
@@ -84,6 +87,7 @@ export abstract class CustomBaseEntity {
 export abstract class BaseDto {
   @Expose()
   createdAt: Date;
+
   @Expose()
   updatedAt: Date;
 }
