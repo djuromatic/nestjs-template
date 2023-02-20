@@ -17,6 +17,8 @@ RUN yarn --cwd dist/apps/bizzlet
 RUN yarn --cwd dist/apps/libs/modules
 RUN yarn --cwd dist/apps/libs/utils
 
+RUN yarn bizzllet:cert
+
 RUN ls dist/apps/bizzlet -al
 
 RUN ls /app -al
