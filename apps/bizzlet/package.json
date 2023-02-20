@@ -1,10 +1,10 @@
 {
-  "name": "bizzlet",
-  "version": "v0.0.22",
+  "name": "@app/bizzlet",
+  "version": "v0.0.1",
   "description": "bizzlet api",
   "scripts": {},
   "author": {
-    "name": "MvpWorkshop"
+    "name": "Bizzllet"
   },
   "license": "MIT",
   "dependencies": {},
