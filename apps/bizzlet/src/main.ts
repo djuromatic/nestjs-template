@@ -8,9 +8,10 @@ import { AppExceptionFilter, HttpLoggerInterceptor } from 'libs/utils';
 import { AppModule } from './app.module';
 import { setupSwagger } from './config/swagger';
 
+import * as fs from 'fs';
+import * as path from 'path';
+
 async function bootstrap() {
-  const path = require('path');
-  const fs = require('fs');
   const keyFile = fs.readFileSync(path.join(__dirname, 'certs', 'key.pem'));
   const certFile = fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'));
 
