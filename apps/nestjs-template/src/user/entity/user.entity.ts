@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { CustomBaseEntity } from 'libs/database/adapter';
+import { CustomBaseEntity } from '../../../../../libs/modules/database/adapter';
 import {
   Entity,
   Column,
