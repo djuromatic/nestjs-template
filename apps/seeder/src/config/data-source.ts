@@ -18,7 +18,7 @@ export const TypeormDataSource = new DataSource({
   migrationsRun: false,
   logging: true,
 
-  entities: ['../../../bizzlet/entitis/*.entity.ts'],
+  entities: ['../../../nestjs-template/src/**/entity/*.entity.ts'],
   migrations,
 });
 
