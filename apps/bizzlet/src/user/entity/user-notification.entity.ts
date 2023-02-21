@@ -24,7 +24,7 @@ export class UserNotification extends CustomBaseEntity {
 
   @Expose()
   @Column({ name: 'metadata', type: 'json' })
-  metadata: Object;
+  metadata: object;
 
   @Column({ name: 'user_id', type: 'uuid' })
   userId?: string;

@@ -4,14 +4,13 @@ import { Paginated, PaginatedQuery } from 'libs/modules/database/adapter';
 import { UserProfileDto } from './dto/user-profile.dto';
 import { UserSettingsDto } from './dto/user-settings.dto';
 import { UserDto } from './dto/user.dto';
-import { User } from './entity/user.entity';
 import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  async getUsersPaginated(query: PaginatedQuery): Promise<Paginated<User>> {
+  async getUsersPaginated(query: PaginatedQuery): Promise<Paginated<UserDto>> {
     const result = await this.userRepository.paginated(query);
     return {
       ...result,
@@ -19,21 +18,24 @@ export class UserService {
     };
   }
 
-  async getUserById(id: string): Promise<User> {
-    return this.userRepository.findOne({
+  async getUserById(id: string): Promise<UserDto> {
+    const result = this.userRepository.findOne({
       where: { id },
       relations: { profile: true },
     });
+    return plainToInstance(UserDto, result);
   }
 
-  async getUserByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({
+  async getUserByEmail(email: string): Promise<UserDto> {
+    const result = this.userRepository.findOne({
       where: { email },
       relations: { profile: true },
     });
+
+    return plainToInstance(UserDto, result);
   }
 
-  async createUser(userDto: UserDto): Promise<User> {
+  async createUser(userDto: UserDto): Promise<UserDto> {
     const user = this.userRepository.create({
       ...userDto,
       profile: userDto.profile ? userDto.profile : new UserProfileDto(),

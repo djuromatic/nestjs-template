@@ -2,7 +2,6 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { Paginated, PaginatedQuery } from 'libs/modules/database/adapter';
 import { UuidValidator } from 'libs/utils';
 import { OrganizationDto } from './dto/organization.dto';
-import { Organization } from './entity/organization.entity';
 import { OrganizationService } from './organization.service';
 
 @Controller('organizations')
@@ -12,19 +11,19 @@ export class OrganizationController {
   @Get()
   getOrganizations(
     @Query() query: PaginatedQuery,
-  ): Promise<Paginated<Organization>> {
+  ): Promise<Paginated<OrganizationDto>> {
     return this.organizationService.findPaginated(query);
   }
 
   @Get(':organizationId')
   getOrganization(
     @Param('organizationId', new UuidValidator()) organizationId: string,
-  ): Promise<Organization> {
+  ): Promise<OrganizationDto> {
     return this.organizationService.findOne(organizationId);
   }
 
   @Post()
-  createOrganization(@Body() body: OrganizationDto) {
+  createOrganization(@Body() body: OrganizationDto): Promise<OrganizationDto> {
     return this.organizationService.create(body);
   }
 }

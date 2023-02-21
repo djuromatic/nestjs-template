@@ -1,10 +1,11 @@
 import { Expose } from 'class-transformer';
+import { CustomBaseEntity } from 'libs/modules/database/adapter';
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from '../../user/entity/user.entity';
 import { Organization } from './organization.entity';
 
 @Entity('organizations_users')
-export class OrganizationUser {
+export class OrganizationUser extends CustomBaseEntity {
   @Expose()
   @PrimaryColumn({ name: 'user_id' })
   userId: string;

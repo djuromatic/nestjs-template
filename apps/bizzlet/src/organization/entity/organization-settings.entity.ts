@@ -20,7 +20,7 @@ export class OrganizationSettings extends CustomBaseEntity {
 
   @Expose()
   @Column({ name: 'notification_settings', type: 'json', default: null })
-  notificationSettings?: Object;
+  notificationSettings?: object;
 
   @Column({ name: 'organization_id', type: 'uuid' })
   organizationId?: string;
