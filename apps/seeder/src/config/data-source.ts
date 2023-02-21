@@ -7,26 +7,26 @@ dotenv.config();
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TypeormDataSource = new DataSource({
-    type: "postgres",
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT),
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+  type: 'postgres',
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 
-    synchronize: false,
-    migrationsRun: false,
-    logging: true,
+  synchronize: false,
+  migrationsRun: false,
+  logging: true,
 
-    entities: ["../../../bizzlet/entitis/*.entity.ts"],
-    migrations,
+  entities: ['../../../bizzlet/entitis/*.entity.ts'],
+  migrations,
 });
 
 TypeormDataSource.initialize()
-    .then(() => {
-        console.log(process.env.DB_NAME);
-        console.log('Data Source has been initialized!');
-    })
-    .catch((err) => {
-        console.error('Error during Data Source initialization', err);
-    });
+  .then(() => {
+    console.log(process.env.DB_NAME);
+    console.log('Data Source has been initialized!');
+  })
+  .catch((err) => {
+    console.error('Error during Data Source initialization', err);
+  });
