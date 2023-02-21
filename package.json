@@ -3,18 +3,21 @@
   "version": "0.0.1",
   "description": "",
   "author": "",
-  "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": ">= 18.0.0 <= 18.13.0"
+    "node": ">= 18.0.0 <= 18.15.0"
+  },
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "./apps/*",
+      "./libs/*"
+    ]
   },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "modules:install": "cd ./libs/modules && yarn ",
-    "utils:install": "cd ./libs/utils && yarn ",
-    "app:install": "yarn utils:install && yarn modules:install && yarn",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -24,7 +27,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/bizzlet/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/bizzlet/test/jest-e2e.json",
+    "bizzllet:cert": "./scripts/generate-cert.sh",
+    "app:install": "yarn && yarn workspace @libs/modules install && yarn workspace @libs/utils install  && yarn workspace @app/bizzlet install",
+    "app:install:production": "yarn --production=true && cd ./libs/modules && yarn --production=true && cd ../utils && yarn --production=true",
+    "libs:build:modules": "cd ./libs/modules && nest build",
+    "libs:build:utils": "cd ./libs/utils && nest build"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -52,6 +60,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",

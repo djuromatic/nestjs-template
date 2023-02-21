@@ -1,4 +1,4 @@
-FROM node:18.13.0-alpine
+FROM node:18-alpine
 
 ADD . /app
 
@@ -6,21 +6,49 @@ WORKDIR /app
 
 RUN cat package.json
 
-RUN ls /app -al
 RUN yarn app:install
+
+RUN yarn bizzllet:cert
+
 RUN yarn build bizzlet
 
-COPY apps/bizzlet/package.json dist/apps/bizzlet/
-COPY apps/bizzlet/tsconfig.app.json dist/apps/bizzlet/
+RUN yarn libs:build:modules
+RUN yarn libs:build:utils
 
-RUN yarn --cwd dist/apps/bizzlet
-RUN yarn --cwd dist/apps/libs/modules
-RUN yarn --cwd dist/apps/libs/utils
 
-RUN ls dist/apps/bizzlet -al
+# stage 2 build copy dist folder and package.json
+FROM node:18-alpine
 
-RUN ls /app -al
+WORKDIR /app
 
-RUN yarn
+COPY --from=0 /app/dist/ ./
+#copy package.json
+COPY --from=0 /app/package.json ./
+#copy yarn.lock
+COPY --from=0 /app/yarn.lock ./
 
-CMD yarn --cwd apps start:prod
+#copy package for libs
+COPY --from=0 /app/libs/modules/package.json ./libs/modules/package.json
+COPY --from=0 /app/libs/utils/package.json ./libs/utils/package.json
+
+#copy yarn.lock for libs
+COPY --from=0 /app/libs/modules/yarn.lock ./libs/modules/yarn.lock
+COPY --from=0 /app/libs/utils/yarn.lock ./libs/utils/yarn.lock
+
+
+RUN ls -la
+
+
+RUN ls ./libs -la
+
+RUN ls ./libs/modules -la
+
+RUN ls ./libs/utils -la
+
+
+#install dependencies
+RUN yarn app:install:production
+
+
+
+CMD node ./apps/bizzlet/main.js
