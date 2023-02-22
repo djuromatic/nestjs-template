@@ -3,6 +3,7 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "apps/bizzlet/src",
   "compilerOptions": {
+    "plugins": ["@nestjs/swagger/plugin"],
     "deleteOutDir": true,
     "webpack": true,
     "tsConfigPath": "apps/bizzlet/tsconfig.app.json"
