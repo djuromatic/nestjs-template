@@ -5,9 +5,13 @@ import { UserProfile } from 'apps/bizzlet/src/user/entity/user-profile.entity';
 import { UserSettings } from 'apps/bizzlet/src/user/entity/user-settings.entity';
 import { UserNotification } from 'apps/bizzlet/src/user/entity/user-notification.entity';
 
+const DEFAULT_MAX_NOTIFICATIONS: number = 5;
+const DEFAULT_MIN_NOTIFICATIONS: number = 0;
+const DEFAULT_RANDOM_USERS: number = 10;
+
 /**
  * Creates a random name
- * @returns Object containing a random first and last name
+ * @returns {Object} containing random firstName and lastName string values
  */
 export const generateName = (): {
   firstName: string;
@@ -19,10 +23,17 @@ export const generateName = (): {
   return { firstName, lastName };
 };
 
+/**
+ *
+ * @dev firstName and lastName are only used for generating an email that matches the name
+ * @param firstName - The first name of the user if already generated
+ * @param lastName - The last name of the user if already generated
+ * @returns {User} - The generated user entity
+ */
 export const generateRandomUser = (
   firstName?: string,
   lastName?: string,
-): Partial<User> => {
+): User => {
   const user = new User();
 
   user.id = faker.datatype.uuid();
@@ -34,15 +45,17 @@ export const generateRandomUser = (
 };
 
 /**
- * Creates a random user
- * @param userId Creates a random user profile for the specified userId
- * @returns User profile containing name and address
+ * Creates a random user profile for the specified user
+ * @param userId - The id of the user the profile will belong to
+ * @param firstName - Optional, The first name of the user (if already generated)
+ * @param lastName - Opitonal, The last name of the user (if already generated)
+ * @returns {UserProfile} - The generated user profile entity
  */
 export const generateRandomUserProfile = (
   userId: string,
   firstName?: string,
   lastName?: string,
-): Partial<UserProfile> => {
+): UserProfile => {
   const profile = new UserProfile();
 
   profile.id = faker.datatype.uuid();
@@ -59,40 +72,38 @@ export const generateRandomUserProfile = (
 
 /**
  * Generates the settings for the given user
- * @param user_id The id of the user for which to create the settings
- * @returns User settings, containing the settings id and default currency
+ * @param userId The id of the user for which to create the settings
+ * @returns {UserSettings} - The generated user settings entity
  */
-export const generateRandomUserSettings = (
-  user_id: string,
-): Partial<UserSettings> => {
+export const generateRandomUserSettings = (userId: string): UserSettings => {
   const settings = new UserSettings();
 
   settings.id = faker.datatype.uuid();
   settings.defaultCurrency = 'USD';
-  settings.userId = user_id;
+  settings.userId = userId;
 
   return settings;
 };
 
 /**
  * Generates a random number of notifications (between min and max) for the given user
- * @param user_id The id of the user to whom the notifications will be connected
- * @param min The minimum number of notifications to generate
- * @param max The maximum number of notifications to generate
- * @returns An array of notifications containing the required fields
+ * @param userId The id of the user the notifications will belong to
+ * @param min The minimum number of notifications to generate (default is DEFAULT_MIN_NOTIFICATIONS)
+ * @param max The maximum number of notifications to generate (default is DEFAULT_MAX_NOTIFICATIONS)
+ * @returns {UserNotification[]} - An array of notification entites that belong to the user
  */
 export const generateRandomUserNotifications = (
-  user_id: string,
-  min: number = 0,
-  max: number = 5,
-): Partial<UserNotification>[] => {
-  const notifications: Partial<UserNotification>[] = [];
+  userId: string,
+  min: number = DEFAULT_MIN_NOTIFICATIONS,
+  max: number = DEFAULT_MAX_NOTIFICATIONS,
+): UserNotification[] => {
+  const notifications: UserNotification[] = [];
 
   const len = Math.round(Math.random() * (max - min)) + min;
   for (let i = 0; i < len; i++) {
     const notification = new UserNotification();
     notification.id = faker.datatype.uuid();
-    notification.userId = user_id;
+    notification.userId = userId;
 
     notification.type = faker.datatype.number({ min: 0, max: 1 });
     notification.message = faker.lorem.sentence();
@@ -108,13 +119,15 @@ export const generateRandomUserNotifications = (
  * Interface for exporting the generated users and their data
  */
 export interface UserGeneratorData {
-  users: Partial<User>[];
-  profiles: Partial<UserProfile>[];
-  settings: Partial<UserSettings>[];
-  notifications: Partial<UserNotification>[];
+  users: User[];
+  profiles: UserProfile[];
+  settings: UserSettings[];
+  notifications: UserNotification[];
 }
 
-export const generateUsers = (len = 10): UserGeneratorData => {
+export const generateUsers = (
+  len = DEFAULT_RANDOM_USERS,
+): UserGeneratorData => {
   const returnData: UserGeneratorData = {
     users: [],
     profiles: [],

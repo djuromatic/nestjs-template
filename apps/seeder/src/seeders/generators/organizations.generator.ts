@@ -9,12 +9,13 @@ import { OrganizationUser } from 'apps/bizzlet/src/organization/entity/organizat
 const DEFAULT_MAX_CONTACTS: number = 5;
 const DEFAULT_MIN_CONTACTS: number = 0;
 const DEFAULT_RANDOM_ORGANIZATIONS: number = 5;
+const DEFAULT_ORGANIZATIONS_USER_ROLE: string = 'admin';
 
 /**
  * Generate a random organization entity.
- * @returns Partial<Organization>
+ * @returns {Organization} - The generated organization entity
  */
-export const generateRandomOrganization = (): Partial<Organization> => {
+export const generateRandomOrganization = (): Organization => {
   const organization = new Organization();
 
   organization.id = faker.datatype.uuid();
@@ -25,16 +26,16 @@ export const generateRandomOrganization = (): Partial<Organization> => {
 
 /**
  * Generate a random organization profile entity for a given organization.
- * @param organization_id - The id of the organization the profile belongs to.
- * @returns Partial<OrganizationProfile>
+ * @param organizationId - The id of the organization the profile will belong to.
+ * @returns {OrganizationProfile} - The generated organization profile entity
  */
 export const generateRandomOrganizationProfile = (
-  organization_id: string,
-): Partial<OrganizationProfile> => {
+  organizationId: string,
+): OrganizationProfile => {
   const profile = new OrganizationProfile();
 
   profile.id = faker.datatype.uuid();
-  profile.organizationId = organization_id;
+  profile.organizationId = organizationId;
   profile.location =
     `${faker.address.streetAddress()}` +
     `, ${faker.address.city()}` +
@@ -45,16 +46,16 @@ export const generateRandomOrganizationProfile = (
 
 /**
  * Generate a random organization settings entity for a given organization.
- * @param organization_id - The id of the organization the settings belong to.
- * @returns Partial<OrganizationSettings>
+ * @param organizationId - The id of the organization the settings will belong to.
+ * @returns {OrganizationSettings} - The generated organization settings entity
  */
 export const generateRandomOrganizationSettings = (
-  organization_id: string,
-): Partial<OrganizationSettings> => {
+  organizationId: string,
+): OrganizationSettings => {
   const settings = new OrganizationSettings();
 
   settings.id = faker.datatype.uuid();
-  settings.organizationId = organization_id;
+  settings.organizationId = organizationId;
   settings.defaultCurrency = 'USD';
   settings.notificationSettings = JSON.parse(faker.datatype.json());
 
@@ -63,24 +64,24 @@ export const generateRandomOrganizationSettings = (
 
 /**
  * Generate an array of random organization contact entities for a given organization.
- * @param organization_id - The id of the organization the contacts belong to.
+ * @param organizationId - The id of the organization the contacts will belong to.
  * @param min - The minimum number of contacts to generate (default is DEFAULT_MIN_CONTACTS).
  * @param max - The maximum number of contacts to generate (default is DEFAULT_MAX_CONTACTS).
- * @returns Partial<OrganizationContact>[]
+ * @returns {OrganizationContact[]} - An array of organization contact entities
  */
 export const generateRandomOrganizationContacts = (
-  organization_id: string,
+  organizationId: string,
   min: number = DEFAULT_MIN_CONTACTS,
   max: number = DEFAULT_MAX_CONTACTS,
-): Partial<OrganizationContact>[] => {
-  const contacts: Partial<OrganizationContact>[] = [];
+): OrganizationContact[] => {
+  const contacts: OrganizationContact[] = [];
 
   const len = Math.round(Math.random() * (max - min)) + min;
   for (let i = 0; i < len; i++) {
     const contact = new OrganizationContact();
 
     contact.id = faker.datatype.uuid();
-    contact.organizationId = organization_id;
+    contact.organizationId = organizationId;
     contact.email = faker.internet.email();
     contact.invoice = faker.lorem.sentence();
 
@@ -92,10 +93,10 @@ export const generateRandomOrganizationContacts = (
 
 /**
  * Generate an organization user entry for the given user and the giver organization.
- * @param organizationId - The id of the organization the user should be added to.
+ * @param organizationId - The id of the organization the user will be added to.
  * @param userId - The id of the user to be added to the organization.
- * @param role - The role the user should have (default is 'admin').
- * @returns OrganizationUser
+ * @param role - The role the user will have (default is DEFAULT_ORGANIZATIONS_USER_ROLE).
+ * @returns {OrganizationUser} - The organization user entry for the given user and the giver organization.
  */
 export const generateOrganizationUser = (
   organizationId: string,
@@ -107,7 +108,7 @@ export const generateOrganizationUser = (
   organizationUser.id = faker.datatype.uuid();
   organizationUser.organizationId = organizationId;
   organizationUser.userId = userId;
-  organizationUser.role = role ?? 'admin';
+  organizationUser.role = role ?? DEFAULT_ORGANIZATIONS_USER_ROLE;
 
   return organizationUser;
 };
@@ -116,17 +117,18 @@ export const generateOrganizationUser = (
  * Interface for exporting the generated organizations and their data
  */
 export interface OrganizationGeneratorData {
-  organizations: Partial<Organization>[];
-  profiles: Partial<OrganizationProfile>[];
-  settings: Partial<OrganizationSettings>[];
-  contacts: Partial<OrganizationContact>[];
+  organizations: Organization[];
+  profiles: OrganizationProfile[];
+  settings: OrganizationSettings[];
+  contacts: OrganizationContact[];
   users?: OrganizationUser[];
 }
 
 /**
  * Generate an object containing arrays of random organization, profile, settings, and contact entities.
+ * @dev - Does not generate the organizations users, that has to be done outside of the generator
  * @param len - The number of organizations to generate (default is DEFAULT_RANDOM_ORGANIZATIONS).
- * @returns OrganizationGeneratorData
+ * @returns {OrganizationGeneratorData} - The object containing arrays of random organizations and their data
  */
 export const generateOrganizations = (
   len = DEFAULT_RANDOM_ORGANIZATIONS,
