@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 
-import migrations from '../migrations';
+import seeders from '../seeders';
 
 dotenv.config();
 
@@ -19,7 +19,8 @@ export const TypeormDataSource = new DataSource({
   logging: true,
 
   entities: ['../../../nestjs-template/src/**/entity/*.entity.ts'],
-  migrations,
+  migrations: seeders,
+  migrationsTableName: 'seeders',
 });
 
 TypeormDataSource.initialize()
