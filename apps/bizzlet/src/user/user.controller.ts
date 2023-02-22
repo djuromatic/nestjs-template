@@ -1,27 +1,30 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-
 import { Paginated, PaginatedQuery } from 'libs/modules/database/adapter';
 import { UuidValidator } from 'libs/utils';
-import { UserDto } from '../dto/user.dto';
-import { User } from '../entitis/user.entity';
+import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
-@Controller('/user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  createUser(@Body() body: UserDto) {
-    return this.userService.create(body);
-  }
-
   @Get()
-  getUsers(@Query() query: PaginatedQuery): Promise<Paginated<User>> {
-    return this.userService.findPaginated(query);
+  getUsers(@Query() query: PaginatedQuery): Promise<Paginated<UserDto>> {
+    return this.userService.getUsersPaginated(query);
   }
 
-  @Get(':userId')
-  getUser(@Param('userId', new UuidValidator()) userId: string): Promise<User> {
-    return this.userService.findOne(userId);
+  @Get(':id')
+  getUserById(@Param('id', new UuidValidator()) id: string): Promise<UserDto> {
+    return this.userService.getUserById(id);
+  }
+
+  @Get('/email/:email')
+  getUserByEmail(@Param('email') email: string): Promise<UserDto> {
+    return this.userService.getUserByEmail(email);
+  }
+
+  @Post()
+  createUser(@Body() body: UserDto): Promise<UserDto> {
+    return this.userService.createUser(body);
   }
 }
