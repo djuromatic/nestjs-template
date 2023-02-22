@@ -2,6 +2,7 @@ export abstract class ISecretsService {
   global: {
     node_env: 'local' | 'prod';
     port: string;
+    service_name: string;
   };
   auth0: {
     audiance: string;
@@ -20,5 +21,8 @@ export abstract class ISecretsService {
     password: string;
     dbname: string;
     logging: boolean;
+  };
+  trace: {
+    exporter: 'console' | 'aws' | 'none';
   };
 }

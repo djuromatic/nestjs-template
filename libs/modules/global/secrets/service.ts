@@ -17,6 +17,7 @@ export class SecretsService extends ConfigService implements ISecretsService {
     logging: this.get('DB_LOGGING') === 'true' || false,
   };
   global = {
+    service_name: this.get('SERVICE_NAME'),
     node_env: this.get('NODE_ENV') ?? 'prod',
     port: this.get('PORT') ?? 3000,
   };
@@ -27,5 +28,8 @@ export class SecretsService extends ConfigService implements ISecretsService {
 
     management_client_id: this.get('AUTH_MANAGEMENT_CLIENT_ID'),
     management_client_secret: this.get('AUTH_MANAGEMENT_CLIENT_SECRET'),
+  };
+  trace = {
+    exporter: this.get('TRACE_EXPORTER') ?? 'none',
   };
 }
