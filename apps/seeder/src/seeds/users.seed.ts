@@ -32,8 +32,8 @@ const makeRandomUserProfile = (user_id: string): Partial<UserProfile> => {
 };
 
 const generateUsers = (len = 10) => {
-  const users = [];
-  const profiles = [];
+  const users: Partial<User>[] = [];
+  const profiles: Partial<UserProfile>[] = [];
 
   for (let i = 0; i < len; i += 1) {
     const user = makeRandomUser();
