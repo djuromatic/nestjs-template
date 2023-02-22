@@ -6,6 +6,9 @@ export abstract class ISecretsService {
   auth0: {
     audiance: string;
     issuer: string;
+
+    management_client_id: string;
+    management_client_secret: string;
   };
   logger: {
     log_level: string;

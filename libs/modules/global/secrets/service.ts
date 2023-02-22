@@ -24,5 +24,8 @@ export class SecretsService extends ConfigService implements ISecretsService {
   auth0 = {
     audiance: this.get('AUTH_AUDIENCE'),
     issuer: this.get('AUTH_ISSUER'),
+
+    management_client_id: this.get('AUTH_MANAGEMENT_CLIENT_ID'),
+    management_client_secret: this.get('AUTH_MANAGEMENT_CLIENT_SECRET'),
   };
 }

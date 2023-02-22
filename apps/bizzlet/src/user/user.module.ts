@@ -11,11 +11,13 @@ import { OrganizationUser } from '../organization/entity/organization-user.entit
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
-    TypeOrmModule.forFeature([UserProfile]),
-    TypeOrmModule.forFeature([UserSettings]),
-    TypeOrmModule.forFeature([UserNotification]),
-    TypeOrmModule.forFeature([OrganizationUser]),
+    TypeOrmModule.forFeature([
+      User,
+      UserProfile,
+      UserSettings,
+      UserNotification,
+      OrganizationUser,
+    ]),
   ],
   providers: [UserService, UserRepository],
   controllers: [UserController],
