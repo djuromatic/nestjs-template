@@ -1,17 +1,17 @@
 version: '3.8'
 services:
-  # bizzlet:
-  #   container_name: bizzlet
-  #   build:
-  #     context: .
-  #     dockerfile: ./apps/bizzlet/Dockerfile
-  #   restart: always
-  #   ports:
-  #     - '4000:4000'
-  #   depends_on:
-  #     - db
-  #   env_file:
-  #     - .env.local.compose
+  bizzlet:
+    container_name: bizzlet
+    build:
+      context: .
+      dockerfile: ./apps/bizzlet/Dockerfile
+    restart: always
+    ports:
+      - '4000:4000'
+    depends_on:
+      - db
+    env_file:
+      - .env.local.compose
   db:
     container_name: postgres
     image: postgres:14.1-alpine
