@@ -26,13 +26,6 @@ export class HttpLoggerInterceptor implements NestInterceptor {
 
     request['context'] = context;
 
-    //! redundent code
-    if (!request.headers?.traceid) {
-      this.logger.warn('missing traceid in header', 'Tracing');
-      request.headers.traceid = uuidv4();
-      this.logger.warn('Id added on backend', 'Tracing');
-    }
-
     response.on('finish', () => {
       const endDate = new Date();
 

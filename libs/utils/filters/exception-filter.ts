@@ -31,13 +31,6 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     this.logger.error(exception.message, exception.name);
 
-    //! redundent code
-    if (!req.headers?.traceid) {
-      this.logger.warn('missing traceid in header', 'Tracing');
-      req.headers.traceid = uuidv4();
-      this.logger.warn('Id added on backend', 'Tracing');
-    }
-
     res.status(status).json({
       error: {
         code: status,
