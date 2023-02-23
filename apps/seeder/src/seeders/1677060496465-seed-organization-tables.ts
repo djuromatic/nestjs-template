@@ -1,6 +1,9 @@
+import * as fs from 'fs';
 import { HelperService } from 'libs/utils/helpers';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { organizationData } from './generators';
+
+const seedDataPath = __dirname + '/seeded_data/organizations.json';
 
 export class seedOrganizationTables1677060496465 implements MigrationInterface {
   name = 'seedOrganizationTables1677060496465';
@@ -70,6 +73,13 @@ export class seedOrganizationTables1677060496465 implements MigrationInterface {
       .values(organizationData.users)
       .returning('id')
       .execute();
+
+    if (fs.existsSync(seedDataPath)) {
+      fs.unlinkSync(seedDataPath);
+    }
+    fs.writeFileSync(seedDataPath, JSON.stringify(organizationData, null, 2), {
+      encoding: 'utf8',
+    });
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
@@ -102,5 +112,9 @@ export class seedOrganizationTables1677060496465 implements MigrationInterface {
       .delete()
       .from('organizations')
       .execute();
+
+    if (fs.existsSync(seedDataPath)) {
+      fs.unlinkSync(seedDataPath);
+    }
   }
 }

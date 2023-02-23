@@ -1,6 +1,10 @@
+import * as fs from 'fs';
+
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { userData, organizationData } from './generators';
+import { userData } from './generators';
 import { HelperService } from 'libs/utils/helpers';
+
+const seedDataPath = __dirname + '/seeded_data/users.json';
 
 export class seedUserTables1676899257889 implements MigrationInterface {
   name = 'seedUserTables1676899257889';
@@ -57,6 +61,13 @@ export class seedUserTables1676899257889 implements MigrationInterface {
       .values(userData.notifications)
       .returning('id')
       .execute();
+
+    if (fs.existsSync(seedDataPath)) {
+      fs.unlinkSync(seedDataPath);
+    }
+    fs.writeFileSync(seedDataPath, JSON.stringify(userData, null, 2), {
+      encoding: 'utf8',
+    });
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
@@ -83,5 +94,9 @@ export class seedUserTables1676899257889 implements MigrationInterface {
       .delete()
       .from('users')
       .execute();
+
+    if (fs.existsSync(seedDataPath)) {
+      fs.unlinkSync(seedDataPath);
+    }
   }
 }
