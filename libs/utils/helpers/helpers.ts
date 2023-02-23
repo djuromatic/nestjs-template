@@ -14,4 +14,15 @@ export class HelperService {
     var result = key.replace(/([A-Z])/g, ' $1');
     return result.split(' ').join('_').toLowerCase();
   }
+
+  /**
+   * Get random integer between the specified values.
+   * The value is no lower than min, and is less than (but not equal to) max
+   * @param min
+   * @param max
+   * @returns {number} random integer between min and max
+   */
+  static randomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
 }
