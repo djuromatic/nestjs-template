@@ -9,7 +9,7 @@ $ yarn app:install
 # generate certificate
 # you need to have mkcert installed
 # https://formulae.brew.sh/formula/mkcert
-$ yarn nestjs-template:certificate
+$ yarn nestjs-template:cert
 
 ```
 
