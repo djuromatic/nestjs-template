@@ -9,6 +9,11 @@
   "author": "Djuro Matic",
   "license": "ISC",
   "dependencies": {
+    "@opentelemetry/api": "^1.4.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.36.3",
+    "@opentelemetry/id-generator-aws-xray": "^1.1.1",
+    "@opentelemetry/sdk-node": "^0.35.1",
+    "@opentelemetry/sdk-trace-base": "^1.9.1",
     "date-fns": "^2.29.3",
     "uuid": "^9.0.0"
   }

@@ -6,19 +6,20 @@ import {
   BatchSpanProcessor,
 } from '@opentelemetry/sdk-trace-base';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { Injectable } from '@nestjs/common';
-import { ISecretsService } from '../secrets/adapter';
 import { AWSXRayPropagator } from '@opentelemetry/propagator-aws-xray';
 import { AWSXRayIdGenerator } from '@opentelemetry/id-generator-aws-xray';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
+import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
 
-@Injectable()
-export class TracingService {
+export class OpenTelemetryTracing {
   private sdk: opentelemetry.NodeSDK | null;
-  constructor(private readonly secretService: ISecretsService) {
+  constructor(
+    private readonly serviceName: string,
+    private readonly exporter: string,
+  ) {
     // configure the SDK to export telemetry data to the console
     // enable all auto-instrumentations from the meta package
-    this.sdk = this.nodeSDKBuilder(this.secretService.trace.exporter);
+    this.sdk = this.nodeSDKBuilder(this.exporter);
 
     if (this.sdk) {
       this.sdk.start();
@@ -34,8 +35,7 @@ export class TracingService {
 
   private buildConsoleSDK(): opentelemetry.NodeSDK {
     const resource = new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]:
-        this.secretService.global.service_name,
+      [SemanticResourceAttributes.SERVICE_NAME]: this.serviceName,
     });
     const exporter = new ConsoleSpanExporter();
     const spanProcessor = new BatchSpanProcessor(exporter);
@@ -49,8 +49,7 @@ export class TracingService {
 
   private buildAwsSDK(): opentelemetry.NodeSDK {
     const resource = new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]:
-        this.secretService.global.service_name,
+      [SemanticResourceAttributes.SERVICE_NAME]: this.serviceName,
     });
     const tracerConfig = {
       idGenerator: new AWSXRayIdGenerator(),
@@ -69,14 +68,31 @@ export class TracingService {
     return sdk;
   }
 
-  private nodeSDKBuilder(
-    type: 'console' | 'aws' | 'none',
-  ): opentelemetry.NodeSDK | null {
+  private buildJaegerSDK(): opentelemetry.NodeSDK {
+    const resource = new Resource({
+      [SemanticResourceAttributes.SERVICE_NAME]: this.serviceName,
+    });
+    const traceExporter = new JaegerExporter({
+      // for now only used in docker-compose for local environment
+      endpoint: 'http://jaeger:14268/api/traces',
+    });
+    const spanProcessor = new BatchSpanProcessor(traceExporter);
+    return new opentelemetry.NodeSDK({
+      resource,
+      instrumentations: [getNodeAutoInstrumentations()],
+      traceExporter,
+      spanProcessor,
+    });
+  }
+
+  private nodeSDKBuilder(type: string): opentelemetry.NodeSDK | null {
     switch (type) {
       case 'console':
         return this.buildConsoleSDK();
       case 'aws':
         return this.buildAwsSDK();
+      case 'jaeger':
+        return this.buildJaegerSDK();
       case 'none':
         return null;
       default:

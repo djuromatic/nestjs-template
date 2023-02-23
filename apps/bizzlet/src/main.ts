@@ -1,3 +1,5 @@
+//OpenTelemetry needs to be initialized before any other module
+import { OpenTelemetryTracing } from 'libs/utils/tracing/open-telemetry';
 import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AuthorizationGuard } from 'libs/modules/auth0/auth-guard/guard';
@@ -12,6 +14,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 async function bootstrap() {
+  // OpenTelemetry needs to be initialized before any other module
+  new OpenTelemetryTracing(
+    process.env.SERVICE_NAME,
+    process.env.TRACE_EXPORTER ?? 'none',
+  );
+
   const keyFile = fs.readFileSync(path.join(__dirname, 'certs', 'key.pem'));
   const certFile = fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'));
 
@@ -35,7 +43,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new HttpLoggerInterceptor(logger));
   app.useGlobalFilters(new AppExceptionFilter(logger));
-  app.useGlobalGuards(new AuthorizationGuard(secrets));
+  // app.useGlobalGuards(new AuthorizationGuard(secrets));
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 

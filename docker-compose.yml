@@ -1,27 +1,17 @@
 version: '3.8'
 services:
-  bizzlet:
-    container_name: bizzlet
-    build:
-      context: .
-      dockerfile: ./apps/bizzlet/Dockerfile
-    restart: always
-    ports:
-      - '4000:4000'
-    depends_on:
-      - db
-    environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=postgres
-      - DB_LOGGING=false
-      - LOG_LEVEL=info
-      - NODE_ENV=local
-      - PORT=4000
-      - AUTH_AUDIENCE=
-      - AUTH_ISSUER=
+  # bizzlet:
+  #   container_name: bizzlet
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/bizzlet/Dockerfile
+  #   restart: always
+  #   ports:
+  #     - '4000:4000'
+  #   depends_on:
+  #     - db
+  #   env_file:
+  #     - .env.local.compose
   db:
     container_name: postgres
     image: postgres:14.1-alpine
@@ -44,7 +34,20 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - '16686:16686'
+      - '14268:14268'
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+      - LOG_LEVEL=debug
+    volumes:
+      - jaeger-data:/var/lib/jaeger
 volumes:
   db:
     driver: local
   pgadmin-data:
+    driver: local
+  jaeger-data:
+    driver: local
