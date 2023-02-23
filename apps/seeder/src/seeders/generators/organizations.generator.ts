@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
 
-import { Organization } from 'apps/bizzlet/src/organization/entity/organization.entity';
-import { OrganizationProfile } from 'apps/bizzlet/src/organization/entity/organization-profile.entity';
-import { OrganizationSettings } from 'apps/bizzlet/src/organization/entity/organization-settings.entity';
-import { OrganizationContact } from 'apps/bizzlet/src/organization/entity/organization-contact.entity';
-import { OrganizationUser } from 'apps/bizzlet/src/organization/entity/organization-user.entity';
+import { Organization } from 'apps/nestjs-template/src/organization/entity/organization.entity';
+import { OrganizationProfile } from 'apps/nestjs-template/src/organization/entity/organization-profile.entity';
+import { OrganizationSettings } from 'apps/nestjs-template/src/organization/entity/organization-settings.entity';
+import { OrganizationContact } from 'apps/nestjs-template/src/organization/entity/organization-contact.entity';
+import { OrganizationUser } from 'apps/nestjs-template/src/organization/entity/organization-user.entity';
 
 const DEFAULT_MAX_CONTACTS: number = 5;
 const DEFAULT_MIN_CONTACTS: number = 0;

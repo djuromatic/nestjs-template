@@ -1,0 +1,2 @@
+import { DataSourceOptions } from 'typeorm';
+export declare function createDriver(connectionOptions: DataSourceOptions): import("typeorm").Driver;

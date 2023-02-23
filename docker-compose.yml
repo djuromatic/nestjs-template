@@ -1,10 +1,10 @@
 version: '3.8'
 services:
-  bizzlet:
-    container_name: bizzlet
+  nestjs-template:
+    container_name: nestjs-template
     build:
       context: .
-      dockerfile: ./apps/bizzlet/Dockerfile
+      dockerfile: ./apps/nestjs-template/Dockerfile
     restart: always
     ports:
       - '4000:4000'

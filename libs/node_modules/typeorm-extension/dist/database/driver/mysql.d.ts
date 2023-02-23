@@ -1,0 +1,7 @@
+import { MysqlDriver } from 'typeorm/driver/mysql/MysqlDriver';
+import { DatabaseCreateContext, DatabaseDropContext } from '../type';
+import { DriverOptions } from './type';
+export declare function createSimpleMySQLConnection(driver: MysqlDriver, options: DriverOptions): Promise<any>;
+export declare function executeSimpleMysqlQuery(connection: any, query: string, endConnection?: boolean): Promise<unknown>;
+export declare function createMySQLDatabase(context?: DatabaseCreateContext): Promise<unknown>;
+export declare function dropMySQLDatabase(context?: DatabaseDropContext): Promise<unknown>;

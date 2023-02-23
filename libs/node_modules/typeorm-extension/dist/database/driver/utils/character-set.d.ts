@@ -1,0 +1,2 @@
+import { DataSourceOptions } from 'typeorm';
+export declare function getCharacterSetFromDataSourceOptions(options: DataSourceOptions): string | undefined;

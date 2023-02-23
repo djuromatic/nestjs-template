@@ -1,0 +1,3 @@
+import { DatabaseCreateContext, DatabaseDropContext } from '../type';
+export declare function createSQLiteDatabase(context?: DatabaseCreateContext): Promise<void>;
+export declare function dropSQLiteDatabase(context: DatabaseDropContext): Promise<void>;

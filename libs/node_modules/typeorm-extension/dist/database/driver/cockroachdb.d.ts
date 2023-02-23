@@ -1,0 +1,4 @@
+import { DatabaseCreateContext, DatabaseDropContext } from '../type';
+export declare function executeSimpleCockroachDBQuery(connection: any, query: string, endConnection?: boolean): Promise<unknown>;
+export declare function createCockroachDBDatabase(context?: DatabaseCreateContext): Promise<unknown>;
+export declare function dropCockroachDBDatabase(context?: DatabaseDropContext): Promise<unknown>;

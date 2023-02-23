@@ -1,0 +1,3 @@
+import { DatabaseCreateContext, DatabaseDropContext } from '../type';
+export declare function buildDatabaseCreateContext(context?: DatabaseCreateContext): Promise<DatabaseCreateContext>;
+export declare function buildDatabaseDropContext(context?: DatabaseDropContext): Promise<DatabaseDropContext>;

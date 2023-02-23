@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 
-import { User } from 'apps/bizzlet/src/user/entity/user.entity';
-import { UserProfile } from 'apps/bizzlet/src/user/entity/user-profile.entity';
-import { UserSettings } from 'apps/bizzlet/src/user/entity/user-settings.entity';
-import { UserNotification } from 'apps/bizzlet/src/user/entity/user-notification.entity';
+import { User } from 'apps/nestjs-template/src/user/entity/user.entity';
+import { UserProfile } from 'apps/nestjs-template/src/user/entity/user-profile.entity';
+import { UserSettings } from 'apps/nestjs-template/src/user/entity/user-settings.entity';
+import { UserNotification } from 'apps/nestjs-template/src/user/entity/user-notification.entity';
 
 const DEFAULT_MAX_NOTIFICATIONS: number = 5;
 const DEFAULT_MIN_NOTIFICATIONS: number = 0;

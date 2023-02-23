@@ -1,0 +1,16 @@
+import { DataSourceOptions } from 'typeorm';
+import { DataSourceOptionsBuildContext } from './type';
+export declare function extendDataSourceOptions(options: DataSourceOptions, tsConfigDirectory?: string): Promise<DataSourceOptions>;
+/**
+ * Build DataSourceOptions from configuration.
+ *
+ * @deprecated
+ * @param context
+ */
+export declare function buildLegacyDataSourceOptions(context: DataSourceOptionsBuildContext): Promise<DataSourceOptions>;
+/**
+ * Build DataSourceOptions from DataSource or from configuration.
+ *
+ * @param context
+ */
+export declare function buildDataSourceOptions(context?: DataSourceOptionsBuildContext): Promise<DataSourceOptions>;

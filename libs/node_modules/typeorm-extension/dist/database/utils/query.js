@@ -1,0 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.existsQuery = void 0;
+function existsQuery(builder, inverse = false) {
+    return `${inverse ? 'not ' : ''}exists (${builder.getQuery()})`;
+}
+exports.existsQuery = existsQuery;
+//# sourceMappingURL=query.js.map

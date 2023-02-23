@@ -7,10 +7,10 @@ import {
   OrganizationGeneratorData,
 } from './organizations.generator';
 
-import { OrganizationUser } from 'apps/bizzlet/src/organization/entity/organization-user.entity';
-import { User } from 'apps/bizzlet/src/user/entity/user.entity';
+import { OrganizationUser } from 'apps/nestjs-template/src/organization/entity/organization-user.entity';
+import { User } from 'apps/nestjs-template/src/user/entity/user.entity';
 import { HelperService } from 'libs/utils/helpers';
-import { Organization } from 'apps/bizzlet/src/organization/entity/organization.entity';
+import { Organization } from 'apps/nestjs-template/src/organization/entity/organization.entity';
 
 const seededOrganizationDataPath =
   __dirname + '/../seeded_data/organizations.json';

@@ -6,20 +6,20 @@ fi
 
 mkcert -install
 
-#set domain to bizzlet.dev
-domain="bizzllet.test"
+#set domain to nestjs-template.dev
+domain="nestjs-template.test"
 
 #generate cert
 mkcert ${domain}
 
 #create cert dir
-mkdir -p certs/bizzllet
+mkdir -p certs/nestjs-template
 
 #move and rename cert files
-mv ${domain}.pem certs/bizzllet/cert.pem
-mv ${domain}-key.pem certs/bizzllet/key.pem
+mv ${domain}.pem certs/nestjs-template/cert.pem
+mv ${domain}-key.pem certs/nestjs-template/key.pem
 
-# if bizzlet.dev is not in /etc/hosts file add it
+# if nestjs-template.dev is not in /etc/hosts file add it
 if ! grep -q "${domain}" /etc/hosts; then
     echo "127.0.0.1 ${domain}" | sudo tee -a /etc/hosts
 fi

@@ -1,23 +1,23 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/bizzlet/src",
+  "sourceRoot": "apps/nestjs-template/src",
   "compilerOptions": {
     "plugins": ["@nestjs/swagger/plugin"],
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/bizzlet/tsconfig.app.json"
+    "tsConfigPath": "apps/nestjs-template/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/bizzlet",
+  "root": "apps/nestjs-template",
   "projects": {
-    "bizzlet": {
+    "nestjs-template": {
       "type": "application",
-      "root": "apps/bizzlet",
+      "root": "apps/nestjs-template",
       "entryFile": "main",
-      "sourceRoot": "apps/bizzlet/src",
+      "sourceRoot": "apps/nestjs-template/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/bizzlet/tsconfig.app.json"
+        "tsConfigPath": "apps/nestjs-template/tsconfig.app.json"
       }
     },
     "@libs/modules": {

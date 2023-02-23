@@ -1,0 +1,12 @@
+{
+  "name": "@app/nestjs-template",
+  "version": "v0.0.1",
+  "description": "nestjs-template api",
+  "scripts": {},
+  "author": {
+    "name": "nestjs-template"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
