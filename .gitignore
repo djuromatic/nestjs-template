@@ -38,3 +38,6 @@ lerna-debug.log*
 
 # ENV
 .env
+
+# SEEDER
+apps/seeder/src/seeders/seeded_data
