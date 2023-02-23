@@ -8,6 +8,10 @@ import {
 } from './organizations.generator';
 
 import { OrganizationUser } from 'apps/bizzlet/src/organization/entity/organization-user.entity';
+import { User } from 'apps/bizzlet/src/user/entity/user.entity';
+import { HelperService } from 'libs/utils/helpers';
+import { Organization } from 'apps/bizzlet/src/organization/entity/organization.entity';
+
 const seededOrganizationDataPath =
   __dirname + '/../seeded_data/organizations.json';
 const seededUserDataPath = __dirname + '/../seeded_data/users.json';
@@ -30,16 +34,39 @@ if (fs.existsSync(seededOrganizationDataPath)) {
   organizationData = generatedOrganizationData;
 }
 
+const chooseUsers = (users): User[] => {
+  const chosenUsers: User[] = [];
+  const numberOfUsersToChoose = Math.ceil(users.length / 2);
+  let floor: number = 1;
+
+  while (chosenUsers.length < numberOfUsersToChoose) {
+    const ceil: number =
+      users.length - (numberOfUsersToChoose - chosenUsers.length) + 1;
+    const chosenUserIndex: number = HelperService.randomInt(floor, ceil);
+
+    chosenUsers.push(users[chosenUserIndex]);
+
+    floor = chosenUserIndex;
+  }
+
+  return chosenUsers;
+};
+
 const addUsersToOrganizations = (): OrganizationUser[] => {
   const organizationUsers: OrganizationUser[] = [];
 
-  const users = generatedUserData.users;
-  const organizations = generatedOrganizationData.organizations;
+  const users: User[] = userData.users;
+  const organizations: Organization[] = organizationData.organizations;
 
-  for (let i = 0; i < users.length; i++) {
-    if (i == 0) {
+  for (let organization of organizations) {
+    // TODO Change memeber role placeholder
+    organizationUsers.push(
+      generateOrganizationUser(organization.id, users[0].id, 'admin'),
+    );
+    const chosenUsers = chooseUsers(users);
+    for (let user of chosenUsers) {
       organizationUsers.push(
-        generateOrganizationUser(organizations[0].id, users[i].id, 'admin'),
+        generateOrganizationUser(organization.id, user.id, 'member'),
       );
     }
   }
